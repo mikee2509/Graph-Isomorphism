@@ -3,29 +3,43 @@
 
 #include <list>
 #include <vector>
+#include <iostream>
 
 class Graph {
 public:
     class Vertex;
 
 private:
-    std::vector<Vertex*> vertices;
+    std::vector<Vertex> vertices;
     unsigned long numOfVertices;
 
 public:
-    Graph(std::vector<Vertex*> v) : vertices(v), numOfVertices(v.size()) {}
-    virtual ~Graph();
+    Graph() : numOfVertices(0) {}
+    Graph(std::vector<Vertex> v);
+    Graph(const Graph& other) : vertices(other.vertices), numOfVertices(other.numOfVertices) {}
 
-//    void print();
+    bool operator==(const Graph &rhs) const;
+    bool operator!=(const Graph &rhs) const;
+
+    //void print() const;
+    std::vector<std::pair<int, int>> isIsomorphic(const Graph &other) const;
+    bool doDegreesMatch(const Graph &other) const;
+    void relabelGraph(const int *labels);
 };
 
 class Graph::Vertex {
     friend class Graph;
     int number;
+    unsigned long degree;
     std::list<int> neighbours;
 
 public:
-    Vertex(int num, std::list<int> ngh) : number(num), neighbours(ngh) {}
+    Vertex(int num, std::list<int> ngh) : number(num), degree(ngh.size()), neighbours(ngh) {
+        neighbours.sort();
+    }
+
+    bool operator==(const Vertex &rhs) const;
+    bool operator!=(const Vertex &rhs) const;
 };
 
 

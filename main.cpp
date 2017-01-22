@@ -18,8 +18,22 @@ int main(int argc, char** argv) {
         Graph graph1(gl1.getVertices()),
               graph2(gl2.getVertices());
 
+//        cout << "FIRST: \n";
 //        graph1.print();
+//        cout << "SECOND: \n";
 //        graph2.print();
+//        cout << "\n\n";
+
+        vector<pair<int, int>> iso = graph1.isIsomorphic(graph2);
+        if(iso.empty()) {
+            cout << "Not isomorphic" << endl;
+        }
+        else {
+            cout << "Isomorphic: " << endl;
+            for(pair<int, int> p : iso) {
+                cout << p.first << " --> " << p.second << endl;
+            }
+        }
 
     } catch (runtime_error e) {
         cout << e.what() << endl;

@@ -11,7 +11,7 @@ class GraphLoader {
     std::ifstream ifs;
 public:
     GraphLoader(const char* file);
-    std::vector<Graph::Vertex*> getVertices();
+    std::vector<Graph::Vertex> getVertices();
 };
 
 

@@ -6,7 +6,7 @@ GraphLoader::GraphLoader(const char *file) {
     if(!ifs) throw runtime_error("Could not open" + string(file));
 }
 
-std::vector<Graph::Vertex *> GraphLoader::getVertices() {
+std::vector<Graph::Vertex> GraphLoader::getVertices() {
     unsigned numOfVertices = 0;
     int a, b;
     ifs >> numOfVertices;
@@ -46,13 +46,10 @@ std::vector<Graph::Vertex *> GraphLoader::getVertices() {
         neighbours[b].push_back(a);
     }
 
-    Graph::Vertex *temp;
-    vector<Graph::Vertex*> vertices;
+    vector<Graph::Vertex> vertices;
     vertices.reserve(vec.size());
     for(int i : vec) {
-        neighbours[i].sort();
-        temp = new Graph::Vertex(i, neighbours[i]);
-        vertices.push_back(temp);
+        vertices.push_back(Graph::Vertex(i, neighbours[i]));
     }
     return vertices;
 }
