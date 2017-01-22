@@ -15,6 +15,7 @@ std::vector<Graph::Vertex> GraphLoader::getVertices() {
     vector<int> vec;
     vec.reserve(numOfVertices);
     while(ifs >> a >> b) {
+        if(a < 0 || b < 0) throw runtime_error("Labels of vertices must be unsigned numbers");
         vec.push_back(a);
         vec.push_back(b);
     }
@@ -26,12 +27,22 @@ std::vector<Graph::Vertex> GraphLoader::getVertices() {
     unsigned vecSize = static_cast<int>(vec.size());
     if(vecSize < numOfVertices) {
         int numOfIsolatedVertices = numOfVertices-vecSize;
+        int uniqueLabel = 0;
         for (int i = 0; i < numOfIsolatedVertices; ++i) {
-            vec.push_back(vec.back()+1);
+            while(find(vec.begin(), vec.end(), uniqueLabel) != vec.end()) {
+                ++uniqueLabel;
+            }
+            vec.push_back(uniqueLabel);
         }
+        sort(vec.begin(), vec.end());
     }
     else if(vecSize > numOfVertices) {
-        throw runtime_error("File error");
+        throw runtime_error("File error, check the number of vertices");
+    }
+
+    if(vec.back()+1 != numOfVertices) {
+        throw runtime_error("Invalid edge to vertex " + to_string(vec.back())
+                            + ", check the number of vertices");
     }
 
     //Create lists of neighbours
@@ -42,8 +53,11 @@ std::vector<Graph::Vertex> GraphLoader::getVertices() {
     ifs.seekg(ifs.beg);
     ifs.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
     while(ifs >> a >> b) {
-        neighbours[a].push_back(b);
-        neighbours[b].push_back(a);
+        if(find(neighbours[a].begin(), neighbours[a].end(), b) == neighbours[a].end()) {
+            neighbours[a].push_back(b);
+            neighbours[b].push_back(a);
+        }
+        else throw runtime_error("Duplicate edge between " + to_string(a) + " and " + to_string(b));
     }
 
     vector<Graph::Vertex> vertices;
