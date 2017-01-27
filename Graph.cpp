@@ -17,16 +17,6 @@ bool Graph::operator!=(const Graph &rhs) const {
     return !(rhs == *this);
 }
 
-//void Graph::print() const {
-//    for(auto v = vertices.begin(); v!=vertices.end(); ++v) {
-//        cout << v->number << "(" << v->degree << "): ";
-//        for(int i : v->neighbours) {
-//            cout << i << " ";
-//        }
-//        cout << endl;
-//    }
-//}
-
 std::vector<std::pair<int, int>> Graph::isIsomorphic(const Graph &other) const {
     std::vector<std::pair<int, int>> bijection;
     if (!doDegreesMatch(other))

@@ -18,11 +18,6 @@ int main(int argc, char** argv) {
         Graph graph1(gl1.getVertices()),
               graph2(gl2.getVertices());
 
-//        cout << "FIRST: \n";
-//        graph1.print();
-//        cout << "SECOND: \n";
-//        graph2.print();
-//        cout << "\n\n";
 
         vector<pair<int, int>> iso = graph1.isIsomorphic(graph2);
         if(iso.empty()) {

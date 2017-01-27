@@ -4,7 +4,6 @@
 #include <list>
 #include <vector>
 #include <algorithm>
-//#include <iostream>
 
 class Graph {
 public:
@@ -22,7 +21,6 @@ public:
     bool operator==(const Graph &rhs) const;
     bool operator!=(const Graph &rhs) const;
 
-    //void print() const;
     std::vector<std::pair<int, int>> isIsomorphic(const Graph &other) const;
     bool doDegreesMatch(const Graph &other) const;
     void relabelGraph(const int *labels);
